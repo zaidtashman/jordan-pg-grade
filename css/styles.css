@@ -1,0 +1,396 @@
+:root {
+    /* Brand Colors - Jordanian Flag Inspired */
+    --color-gov-green: #007A3D;
+    --color-gov-red: #CE1126;
+    --color-gov-black: #000000;
+    --color-gov-white: #FFFFFF;
+    
+    /* UI Colors */
+    --color-bg-body: #F3F4F6;
+    --color-bg-sidebar: #FFFFFF;
+    --color-bg-header: #FFFFFF;
+    
+    --color-text-main: #1F2937;
+    --color-text-muted: #4B5563;
+    --color-border: #E5E7EB;
+    
+    /* Typography */
+    --font-en: 'Inter', sans-serif;
+    --font-ar: 'Cairo', sans-serif;
+    
+    /* Sizing & Shadow */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    --header-height: 70px;
+    --sidebar-width: 380px;
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-en);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-body);
+    overflow: hidden; /* App takes 100vh, inner scrolling */
+}
+
+html[dir="rtl"] body {
+    font-family: var(--font-ar);
+}
+
+/* App Layout */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+.app-layout::before {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(to right, #CE1126 0%, #CE1126 25%, #000 25%, #000 50%, #fff 50%, #fff 75%, #007A3D 75%, #007A3D 100%);
+    flex-shrink: 0;
+    z-index: 50;
+}
+
+/* --- Header --- */
+.app-header {
+    flex: 0 0 var(--header-height);
+    background: var(--color-bg-header);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    box-shadow: var(--shadow-sm);
+    z-index: 20;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gov-badge {
+    width: 36px;
+    height: 24px;
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.flag-stripes {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.stripe { flex: 1; }
+.stripe.black { background-color: var(--color-gov-black); }
+.stripe.white { background-color: var(--color-gov-white); }
+.stripe.green { background-color: var(--color-gov-green); }
+
+.triangle.red {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 18px solid var(--color-gov-red);
+}
+
+html[dir="rtl"] .triangle.red {
+    left: auto;
+    right: 0;
+    border-left: none;
+    border-right: 18px solid var(--color-gov-red);
+}
+
+.titles h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-gov-black);
+    line-height: 1.2;
+}
+
+.header-subtitle {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Language Toggle */
+.lang-toggle {
+    display: flex;
+    background: var(--color-bg-body);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.25rem;
+}
+
+.lang-toggle button {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    color: var(--color-text-muted);
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.lang-toggle button.active {
+    background: var(--color-gov-white);
+    color: var(--color-gov-green);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Language Specific Visibility */
+html[lang="en"] .lang-ar-only { display: none !important; }
+html[lang="ar"] .lang-en-only { display: none !important; }
+
+/* Ministry Logo */
+.mot-logo {
+    width: 60px;
+    height: auto;
+    display: block;
+}
+
+/* --- Body Structure --- */
+.app-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden; /* Hide overflow so Sidebar and Map handle their own */
+    position: relative;
+}
+
+/* --- Sidebar --- */
+.app-sidebar {
+    flex: 0 0 var(--sidebar-width);
+    background: var(--color-bg-sidebar);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.02);
+    transition: margin 0.3s ease, transform 0.3s ease;
+}
+
+.app-sidebar.collapsed {
+    margin-left: calc(-1 * var(--sidebar-width));
+}
+
+html[dir="rtl"] .app-sidebar {
+    border-right: none;
+    border-left: 1px solid var(--color-border);
+    box-shadow: -2px 0 8px rgba(0,0,0,0.02);
+}
+
+html[dir="rtl"] .app-sidebar.collapsed {
+    margin-left: 0;
+    margin-right: calc(-1 * var(--sidebar-width));
+}
+
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+}
+
+.info-card h2 {
+    font-size: 1.5rem;
+    color: var(--color-gov-black);
+    margin-bottom: 0.5rem;
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.content-section {
+    margin-bottom: 1.5rem;
+    background: #FAFAFA;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.content-section h3 {
+    font-size: 1rem;
+    color: var(--color-gov-green);
+    margin-bottom: 0.5rem;
+}
+
+.content-section p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+.sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-text {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* --- Main Area / Map --- */
+.app-main {
+    flex: 1;
+    position: relative;
+    background: var(--color-bg-body); /* fallback if iframe takes time */
+}
+
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* --- Buttons --- */
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: var(--color-text-main);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--color-border);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-header h2 {
+    font-size: 1.1rem;
+    color: var(--color-gov-black);
+}
+
+.sidebar-backdrop {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* --- Media Queries (Mobile View) --- */
+@media (max-width: 768px) {
+    
+    .app-header {
+        padding: 0 1rem;
+    }
+
+    .titles h1 {
+        font-size: 1rem;
+    }
+    
+    .gov-badge {
+        display: none; /* Hide flag badge on small mobile to save space */
+    }
+
+    /* Sidebar transforms into an off-canvas menu */
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 85%;
+        max-width: 350px;
+        transform: translateX(-100%);
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+    }
+    
+    html[dir="rtl"] .app-sidebar {
+        left: auto;
+        right: 0;
+        transform: translateX(100%);
+    }
+
+    /* Active State */
+    .app-sidebar.active {
+        transform: translateX(0);
+    }
+    
+    html[dir="rtl"] .app-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        z-index: 900;
+    }
+
+    .sidebar-backdrop.active {
+        display: block;
+        opacity: 1;
+    }
+    
+    .info-card h2 {
+        display: none; /* redundant since we added sidebar header */
+    }
+}
