@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan Performance Grade Map | Ministry of Transport</title>
+    <meta name="description" content="Official Jordan Performance Grade (PG) Map based on statistical analysis of the climate, published by the Ministry of Transportation.">
+    
+    <!-- Google Fonts: Inter for English, Cairo for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        
+        <!-- Header Bar -->
+        <header class="app-header">
+            <div class="header-left">
+                <!-- Sidebar Toggle -->
+                <button id="sidebar-toggle" class="btn-icon" aria-label="Toggle Sidebar" onclick="toggleSidebar()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                
+                <div class="gov-badge" style="width: 44px; height: 22px; border-radius: 3px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); flex-shrink: 0; display: flex;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" style="width: 100%; height: 100%; display: block;">
+                        <rect width="1200" height="600" fill="#000"/>
+                        <rect width="1200" height="400" y="200" fill="#fff"/>
+                        <rect width="1200" height="200" y="400" fill="#007a3d"/>
+                        <polygon points="0,0 600,300 0,600" fill="#ce1126"/>
+                        <polygon points="172.9,252.7 205.7,294.5 158.6,313.2 208.5,324.9 184.2,370.4 220.6,339 256.7,370.8 232.8,325.2 282.8,314.1 235.9,295.1 269,253.5 221.3,271.7 197.8,225.8 197.3,276.9" fill="#fff"/>
+                    </svg>
+                </div>
+                
+                <div class="titles">
+                    <h1 id="header-title" data-en="Jordan PG Grade Map" data-ar="خريطة درجات الأداء في الأردن">Jordan PG Grade Map</h1>
+                    <span class="header-subtitle" data-en="Ministry of Transportation" data-ar="وزارة النقل">Ministry of Transportation</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="lang-toggle">
+                    <button id="lang-en" class="active" aria-label="Switch to English">EN</button>
+                    <button id="lang-ar" aria-label="Switch to Arabic">عربي</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body (Sidebar + Map) -->
+        <div class="app-body">
+            
+            <!-- Sidebar -->
+            <aside class="app-sidebar" id="sidebar">
+                <!-- Sidebar Header & Close Button -->
+                <div class="sidebar-header">
+                    <h2 data-en="Information" data-ar="معلومات">Information</h2>
+                    <button id="close-sidebar" class="btn-icon" aria-label="Close Sidebar" onclick="closeSidebar()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <div class="sidebar-content">
+                    <div class="info-card">
+                        <h2 data-en="About This Map" data-ar="عن هذه الخريطة">About This Map</h2>
+                        <p class="text-muted" data-en="Official climate statistical analysis for transportation infrastructure." data-ar="التحليل الإحصائي المناخي الرسمي للبنية التحتية للنقل.">Official climate statistical analysis for transportation infrastructure.</p>
+                        
+                        <div class="content-section">
+                            <h3 data-en="What is this map?" data-ar="ما هذه الخريطة؟">What is this map?</h3>
+                            <p data-en="This map presents the Performance Grade (PG) classification of asphalt binders across the Hashemite Kingdom of Jordan, derived from statistical analysis of long-term climate data recorded at weather stations throughout the country. PG grading — a core component of the Superpave system — specifies the binder grade required to withstand the full range of temperatures a road surface experiences at a given location, ensuring pavement durability and performance under local climate conditions." data-ar="تعرض هذه الخريطة تصنيف درجات الأداء (PG) لمواد الربط الإسفلتية في مناطق المملكة الأردنية الهاشمية، وذلك استناداً إلى التحليل الإحصائي للبيانات المناخية طويلة الأمد المسجّلة في المحطات الأرصادية المنتشرة في أنحاء المملكة. يُحدّد نظام تصنيف درجات الأداء — المعتمد ضمن منهجية Superpave — درجةَ ربط الإسفلت المناسبة للتحمّل الكامل لنطاق درجات الحرارة الذي يتعرض له سطح الطريق في كل موقع، مما يضمن متانة الرصيف وأداءه وفق الظروف المناخية المحلية.">This map presents the Performance Grade (PG) classification of asphalt binders across the Hashemite Kingdom of Jordan, derived from statistical analysis of long-term climate data recorded at weather stations throughout the country. PG grading — a core component of the Superpave system — specifies the binder grade required to withstand the full range of temperatures a road surface experiences at a given location, ensuring pavement durability and performance under local climate conditions.</p>
+                        </div>
+                        
+                        <div class="content-section">
+                            <h3 data-en="How to use it?" data-ar="كيف تستخدم هذه الخريطة؟">How to use it?</h3>
+                            <p data-en="Click on any coloured zone to view its assigned PG grade, geographic coordinates, and elevation. Use the layer control panel in the top-right corner to switch between base maps, or to show and hide individual layers — including the Jordan boundary, weather station locations, and PG grade zones. Engineers and planners should use the displayed grade as the minimum specification for asphalt binder selection in any road construction or rehabilitation project within that region." data-ar="انقر على أي منطقة ملوّنة للاطلاع على درجة الأداء المخصصة لها، إلى جانب إحداثياتها الجغرافية وارتفاعها عن سطح البحر. استخدم لوحة التحكم في الطبقات الموجودة في الزاوية العلوية اليمنى للتبديل بين خرائط القاعدة، أو لإظهار الطبقات وإخفائها — كحدود المملكة ومواقع المحطات الجوية وخرائط درجات الأداء. يُوصى المهندسون والمخططون باعتماد درجة الأداء المعروضة كحدٍّ أدنى للمواصفة المطلوبة عند اختيار مادة الربط الإسفلتية في أي مشروع إنشاء أو صيانة للطرق ضمن تلك المنطقة.">Click on any coloured zone to view its assigned PG grade, geographic coordinates, and elevation. Use the layer control panel in the top-right corner to switch between base maps, or to show and hide individual layers — including the Jordan boundary, weather station locations, and PG grade zones. Engineers and planners should use the displayed grade as the minimum specification for asphalt binder selection in any road construction or rehabilitation project within that region.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <img src="img/logo.jpg" alt="Ministry of Transportation" class="mot-logo">
+                    <div class="footer-text">
+                        <strong data-en="Ministry of Transportation" data-ar="وزارة النقل">Ministry of Transportation</strong>
+                        <br>
+                        <span data-en="The Hashemite Kingdom of Jordan" data-ar="المملكة الأردنية الهاشمية">The Hashemite Kingdom of Jordan</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Map View -->
+            <main class="app-main">
+                <div class="map-container">
+                    <iframe src="Jordan-PG-Grade-Map-98_valid.html" title="Jordan PG Grade Map" frameborder="0"></iframe>
+                </div>
+            </main>
+            
+            <!-- Mobile Sidebar Overlay Backdrop -->
+            <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebar()"></div>
+            
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                sidebar.classList.toggle('active');
+                backdrop.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                sidebar.classList.remove('active');
+                backdrop.classList.remove('active');
+            } else {
+                sidebar.classList.add('collapsed');
+            }
+        }
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>
