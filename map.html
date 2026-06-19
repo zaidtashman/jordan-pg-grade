@@ -93,7 +93,7 @@
             <!-- Map View -->
             <main class="app-main">
                 <div class="map-container">
-                    <iframe src="Jordan-PG-Grade-Map-98_valid.html" title="Jordan PG Grade Map" frameborder="0"></iframe>
+                    <iframe id="map-iframe" src="" title="Jordan PG Grade Map" frameborder="0"></iframe>
                 </div>
 
                 <!-- Floating PG Adjustment Overlay -->
@@ -104,44 +104,7 @@
                         <svg class="pg-overlay-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="pg-overlay-body" id="pg-overlay-body">
-                        <table class="pg-adjustment-table" id="pg-adjustment-table">
-                            <thead>
-                                <tr>
-                                    <th class="th-condition" data-en="Traffic Condition" data-ar="حالة المرور">Traffic Condition</th>
-                                    <th class="th-zone th-zone-70" data-en="PG 70 -10 Zone" data-ar="منطقة PG 70 -10">PG 70 -10 Zone</th>
-                                    <th class="th-zone th-zone-64" data-en="PG 64 -10 Zone" data-ar="منطقة PG 64 -10">PG 64 -10 Zone</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="td-condition">
-                                        <div class="condition-label" data-en="Speed ≥ 70 km/h" data-ar="السرعة ≥ 70 كم/س">Speed ≥ 70 km/h</div>
-                                        <div class="condition-separator" data-en="AND" data-ar="و">AND</div>
-                                        <div class="condition-label" data-en="Traffic &lt; 10m ESAL" data-ar="حركة المرور &lt; 10 مليون ESAL">Traffic &lt; 10m ESAL</div>
-                                    </td>
-                                    <td class="td-grade"><span class="pg-badge pg-badge-70">PG 70 -10</span></td>
-                                    <td class="td-grade"><span class="pg-badge pg-badge-64">PG 64 -10</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="td-condition">
-                                        <div class="condition-label" data-en="20 ≤ Speed &lt; 70 km/h" data-ar="20 ≤ السرعة &lt; 70 كم/س">20 ≤ Speed &lt; 70 km/h</div>
-                                        <div class="condition-separator" data-en="OR" data-ar="أو">OR</div>
-                                        <div class="condition-label" data-en="10m ≤ Traffic &lt; 30m ESAL" data-ar="10 مليون ≤ حركة المرور &lt; 30 مليون ESAL">10m ≤ Traffic &lt; 30m ESAL</div>
-                                    </td>
-                                    <td class="td-grade"><span class="pg-badge pg-badge-70">PG 76 -10</span></td>
-                                    <td class="td-grade"><span class="pg-badge pg-badge-70">PG 70 -10</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="td-condition">
-                                        <div class="condition-label" data-en="Speed &lt; 20 km/h" data-ar="السرعة &lt; 20 كم/س">Speed &lt; 20 km/h</div>
-                                        <div class="condition-separator" data-en="OR" data-ar="أو">OR</div>
-                                        <div class="condition-label" data-en="Traffic ≥ 30m ESAL" data-ar="حركة المرور ≥ 30 مليون ESAL">Traffic ≥ 30m ESAL</div>
-                                    </td>
-                                    <td class="td-grade"><span class="pg-badge pg-badge-70">PG 82 -10</span></td>
-                                    <td class="td-grade"><span class="pg-badge pg-badge-70">PG 76 -10</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <!-- Table rendered dynamically from data/config.js -->
                     </div>
                 </div>
             </main>
@@ -151,6 +114,9 @@
             
         </div>
     </div>
+
+    <!-- Configuration (edit data/config.js to update map or table) -->
+    <script src="data/config.js"></script>
 
     <script>
         function toggleSidebar() {
@@ -189,6 +155,61 @@
         if (window.innerWidth > 768) {
             pgOverlay.classList.add('expanded');
         }
+
+        // --- Render from config ---
+        (function() {
+            const config = window.PG_CONFIG;
+            if (!config) return;
+
+            const lang = document.documentElement.lang || 'en';
+
+            // 1) Set map source
+            document.getElementById('map-iframe').src = config.mapSource;
+
+            // 2) Build table from config
+            const table = config.adjustmentTable;
+            const escapeHtml = (str) => {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            };
+
+            let html = '<table class="pg-adjustment-table" id="pg-adjustment-table">';
+
+            // Header
+            html += '<thead><tr>';
+            html += `<th class="th-condition" data-en="Traffic Condition" data-ar="حالة المرور">Traffic Condition</th>`;
+            table.zones.forEach(zone => {
+                html += `<th class="th-zone th-zone-${zone.headerStyle}" data-en="${escapeHtml(zone.label.en)}" data-ar="${escapeHtml(zone.label.ar)}">${escapeHtml(zone.label[lang])}</th>`;
+            });
+            html += '</tr></thead>';
+
+            // Body
+            html += '<tbody>';
+            table.rows.forEach(row => {
+                html += '<tr>';
+
+                // Condition cell
+                html += '<td class="td-condition">';
+                row.condition.lines.forEach((line, i) => {
+                    html += `<div class="condition-label" data-en="${escapeHtml(line.en)}" data-ar="${escapeHtml(line.ar)}">${escapeHtml(line[lang])}</div>`;
+                    if (i < row.condition.lines.length - 1) {
+                        html += `<div class="condition-separator" data-en="${escapeHtml(row.condition.connector.en)}" data-ar="${escapeHtml(row.condition.connector.ar)}">${escapeHtml(row.condition.connector[lang])}</div>`;
+                    }
+                });
+                html += '</td>';
+
+                // Grade cells
+                row.grades.forEach(grade => {
+                    html += `<td class="td-grade"><span class="pg-badge pg-badge-${grade.style}">${escapeHtml(grade.label)}</span></td>`;
+                });
+
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+
+            document.getElementById('pg-overlay-body').innerHTML = html;
+        })();
     </script>
     <script src="js/script.js"></script>
 </body>
