@@ -4,9 +4,9 @@
  * Edit this file to update the map source or the PG adjustment table
  * without modifying the HTML or JavaScript code.
  * 
- * Badge styles:
- *   "70" = orange (PG 70 zone color)
- *   "64" = blue  (PG 64 zone color)
+ * Badge styles (should match the column/zone, not the grade name):
+ *   "70" = orange (PG 70 zone column)
+ *   "64" = blue  (PG 64 zone column)
  */
 window.PG_CONFIG = {
 
@@ -55,7 +55,7 @@ window.PG_CONFIG = {
                 },
                 grades: [
                     { label: "PG 76 -10", style: "70" },
-                    { label: "PG 70 -10", style: "70" }
+                    { label: "PG 70 -10", style: "64" }
                 ]
             },
             {
@@ -68,7 +68,7 @@ window.PG_CONFIG = {
                 },
                 grades: [
                     { label: "PG 82 -10", style: "70" },
-                    { label: "PG 76 -10", style: "70" }
+                    { label: "PG 76 -10", style: "64" }
                 ]
             }
         ]
