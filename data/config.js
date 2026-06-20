@@ -11,7 +11,7 @@
 window.PG_CONFIG = {
 
     // Map iframe source file
-    mapSource: "Jordan-PG-Grade-Map-98_valid.html",
+    mapSource: "Jordan-PG-Grade-Map-98_enhanced.html",
 
     // PG Adjustment Table
     adjustmentTable: {
