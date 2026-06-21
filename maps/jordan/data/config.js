@@ -36,7 +36,7 @@ window.PG_CONFIG = {
                 condition: {
                     lines: [
                         { en: "Speed ≥ 70 km/h", ar: "السرعة ≥ 70 كم/س" },
-                        { en: "Traffic < 10m ESAL", ar: "حركة المرور < 10 مليون ESAL" }
+                        { en: "Traffic < 10m ESAL", ar: "الأحمال المرورية < 10 مليون ESAL" }
                     ],
                     connector: { en: "AND", ar: "و" }
                 },
@@ -49,7 +49,7 @@ window.PG_CONFIG = {
                 condition: {
                     lines: [
                         { en: "20 ≤ Speed < 70 km/h", ar: "20 ≤ السرعة < 70 كم/س" },
-                        { en: "10m ≤ Traffic < 30m ESAL", ar: "10 مليون ≤ حركة المرور < 30 مليون ESAL" }
+                        { en: "10m ≤ Traffic < 30m ESAL", ar: "10 مليون ≤ الأحمال المرورية < 30 مليون ESAL" }
                     ],
                     connector: { en: "OR", ar: "أو" }
                 },
@@ -62,7 +62,7 @@ window.PG_CONFIG = {
                 condition: {
                     lines: [
                         { en: "Speed < 20 km/h", ar: "السرعة < 20 كم/س" },
-                        { en: "Traffic ≥ 30m ESAL", ar: "حركة المرور ≥ 30 مليون ESAL" }
+                        { en: "Traffic ≥ 30m ESAL", ar: "الأحمال المرورية ≥ 30 مليون ESAL" }
                     ],
                     connector: { en: "OR", ar: "أو" }
                 },
